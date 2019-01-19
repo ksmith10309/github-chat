@@ -9,7 +9,7 @@ const authRouter = express.Router();
 authRouter.get('/oauth', (req, res, next) => {
   oauth.authorize(req)
     .then((user) => {
-      res.render('welcome', {name: user.username});
+      res.render('chatroom', {username: JSON.stringify(user.username)});
     })
     .catch(next);
 });
