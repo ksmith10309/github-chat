@@ -30,6 +30,7 @@ body {
   display: grid;
   margin: 20px auto;
   max-width: 900px;
+  position: relative;
   width: 90%;
   grid-template-columns: 3fr 1fr;
   grid-template-rows: 1fr 8fr 1fr;
@@ -42,7 +43,14 @@ body {
   color: white;
   font-size: 20px;
   grid-area: header;
-  padding: 20px;
+  padding: 20px 10px 20px 10px;
+}
+
+.chatroom img {
+  height: 40px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 .chatroom form {
