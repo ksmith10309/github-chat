@@ -4,8 +4,7 @@ import superagent from 'superagent';
 
 import User from './model.js';
 
-const authorize = (req) => {
-  let code = req.query.code;
+const authorize = (code) => {
 
   return superagent.post('https://github.com/login/oauth/access_token')
     .send({
@@ -30,9 +29,7 @@ const authorize = (req) => {
 
     .then(incoming => {
       return User.createFromOAuth(incoming);
-    })
-
-    .catch(error => error);
+    });
 
 };
 
