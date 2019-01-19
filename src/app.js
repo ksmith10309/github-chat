@@ -29,24 +29,22 @@ app.get('/', (req, res) => {
   res.render('home', {url: authURL});
 });
 
-app.use('*', (req, res) => {
-  res.statusCode = 404;
-  res.statusMessage = 'Not Found';
-  res.setHeader('Content-Type', 'text/html');
-  res.render('404');
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   res.statusCode = err.status || 500;
   res.statusMessage = err.message || 'Server Error';
   res.setHeader('Content-Type', 'text/html');
-  console.log('ERROR: ', err);
-  res.render('error', {error: res.statusCode, message: res.statusMessage});
+  res.render('error', {code: res.statusCode, message: res.statusMessage});
 });
 
 let users = [];
 
-io.on('connection', function(socket) {
+io.on('connection', (socket) => {
   socket.on('add user', (username) => {
     socket.username = username;
     users.push(username);
@@ -54,7 +52,7 @@ io.on('connection', function(socket) {
     io.emit('chat message', '- ' + socket.username + ' has joined GitChatApp -');
   });
 
-  socket.on('chat message', function(msg) {
+  socket.on('chat message', (msg) => {
     let currentdate = new Date();
     let minutes = currentdate.getMinutes().toString();
     minutes = minutes.length > 1 ? minutes : '0' + minutes;
@@ -62,7 +60,7 @@ io.on('connection', function(socket) {
     io.emit('chat message', `${socket.username} [${time}]: ${msg}`);
   });
 
-  socket.on('disconnect', function() {
+  socket.on('disconnect', () => {
     let index = users.findIndex(user => user == socket.username);
     users.splice(index, 1);
     io.emit('user list', users);
@@ -72,7 +70,8 @@ io.on('connection', function(socket) {
 
 module.exports = {
   start: (port) => {
-    http.listen(port, function() {
+    http.listen(port, (err) => {
+      if (err) console.log(err.message);
       console.log(`Listening on port ${port}`);
     });
   },
