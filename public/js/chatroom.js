@@ -4,21 +4,27 @@ $(function() {
 
   $('form').submit(function(e) {
     e.preventDefault();
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
+    socket.emit('chat message', $('.m').val());
+    $('.m').val('');
     return false;
   });
 
   socket.on('chat message', function(msg) {
-    $('#messages').append($('<li>').text(msg));
-    let div = $('#messagebox');
+    $('.messages').append($('<li>').text(msg));
+    let div = $('.messagebox');
     div.scrollTop(div.prop('scrollHeight'));
   });
 
   socket.on('user list', function(arr) {
-    $('#users').empty();
+    $('.users').empty();
     for (let i = 0; i < arr.length; i++) {
-      $('#users').append($('<li>').text(arr[i]));
+      $('.users').append($('<li>').text(arr[i]));
     }
+  });
+
+  $('.icon').click(function() {
+    $('.chatroom').toggleClass('column');
+    $('.messagebox').toggleClass('border');
+    $('.userlist').toggle();
   });
 });

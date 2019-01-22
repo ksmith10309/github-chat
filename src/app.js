@@ -69,6 +69,7 @@ io.on('connection', (socket) => {
 });
 
 module.exports = {
+  app: app,
   start: (port) => {
     http.listen(port, (err) => {
       if (err) console.log(err.message);

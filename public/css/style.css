@@ -39,6 +39,10 @@ body {
                        "form form";
 }
 
+.column {
+  grid-template-columns: 3fr 0fr;
+}
+
 .chatroom h1 {
   color: white;
   font-size: 20px;
@@ -51,6 +55,7 @@ body {
   position: absolute;
   right: 10px;
   top: 10px;
+  cursor: pointer;
 }
 
 .chatroom form {
@@ -79,7 +84,7 @@ body {
   width: 20%; 
 }
 
-.chatroom #messagebox { 
+.chatroom .messagebox { 
   background-color: white;
   border-right: 10px solid #eee;
   grid-area: chatroom;
@@ -89,29 +94,34 @@ body {
   padding: 10px;
 }
 
-.chatroom #messages {
+.chatroom .border {
+  border-right: 10px solid rgb(65, 210, 145);
+}
+
+.chatroom .messages {
   list-style-type: none;
 }
 
-.chatroom #messages li { 
+.chatroom .messages li { 
   padding: 10px 0px;
 }
 
-.chatroom #userlist {
+.chatroom .userlist {
   background-color: white;
   grid-area: users;
   height: 500px;
   margin-right: 10px;
   overflow: scroll;
   padding: 10px;
+  min-width: 150px;
 }
 
-.chatroom #userlist h2 {
+.chatroom .userlist h2 {
   font-size: 16px;
   padding: 5px 0px;
 }
 
-.chatroom #users li { 
+.chatroom .users li { 
   padding: 5px 0px;
 }
 
